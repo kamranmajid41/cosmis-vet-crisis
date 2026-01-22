@@ -183,6 +183,132 @@ const scenarios = [
     correctAnswer: "Water Quality Issues (pH Imbalance)",
     sprite: "axolotl",
     colors: ["#ff69b4", "#ff1493"]
+  },
+  {
+    animal: "Arachnid Tarantula",
+    spaceClue: "Vibration sensors detected unusual activity. Habitat module experienced structural stress from external impacts.",
+    vetClue: "Patient is extremely agitated, refusing food, and appears stressed. Legs seem sensitive to touch.",
+    diagnosis: "stress",
+    correctAnswer: "Stress from Environmental Vibration",
+    sprite: "tarantula",
+    colors: ["#8b4513", "#654321"]
+  },
+  {
+    animal: "Quantum Frog",
+    spaceClue: "Temperature control system malfunctioned. Habitat temperature dropped to 8°C for 4 hours before repair.",
+    vetClue: "Patient is lethargic, unresponsive, and body temperature is below normal. Skin appears pale.",
+    diagnosis: "hypothermia",
+    correctAnswer: "Hypothermia",
+    sprite: "frog",
+    colors: ["#32cd32", "#228b22"]
+  },
+  {
+    animal: "Orbital Turtle",
+    spaceClue: "UV radiation shielding compromised. Solar flare warning issued. Emergency protocols activated.",
+    vetClue: "Patient's shell appears discolored and soft. Eyes are swollen and patient is avoiding light.",
+    diagnosis: "radiation",
+    correctAnswer: "Radiation Exposure",
+    sprite: "turtle",
+    colors: ["#3cb371", "#2e8b57"]
+  },
+  {
+    animal: "Meteor Lizard",
+    spaceClue: "Food storage contamination detected. Emergency rations distributed but nutritional content may be compromised.",
+    vetClue: "Patient is weak, showing signs of malnutrition. Bones appear fragile and patient has lost significant weight.",
+    diagnosis: "malnutrition",
+    correctAnswer: "Malnutrition",
+    sprite: "lizard",
+    colors: ["#9acd32", "#6b8e23"]
+  },
+  {
+    animal: "Stellar Scorpion",
+    spaceClue: "Atmospheric composition changed. Nitrogen levels increased while oxygen decreased to 15% for 2 hours.",
+    vetClue: "Patient is disoriented, breathing rapidly, and appears to be in respiratory distress.",
+    diagnosis: "hypoxia",
+    correctAnswer: "Hypoxia (Low Oxygen)",
+    sprite: "scorpion",
+    colors: ["#daa520", "#b8860b"]
+  },
+  {
+    animal: "Nebula Chameleon",
+    spaceClue: "Lighting system malfunctioned. Full-spectrum lights failed. Backup lighting insufficient for 3 days.",
+    vetClue: "Patient's color is abnormal, appears weak, and has difficulty moving. Eyes seem sunken.",
+    diagnosis: "vitamin d deficiency",
+    correctAnswer: "Vitamin D Deficiency",
+    sprite: "chameleon",
+    colors: ["#7cfc00", "#32cd32"]
+  },
+  {
+    animal: "Dam Builder Beaver",
+    spaceClue: "Water recycling system overflowed. Habitat flooded briefly. Water levels returned to normal after 1 hour.",
+    vetClue: "Patient appears stressed, breathing rapidly, and showing signs of exhaustion. Fur is matted.",
+    diagnosis: "stress",
+    correctAnswer: "Stress from Flooding",
+    sprite: "beaver",
+    colors: ["#8b7355", "#6b5644"]
+  },
+  {
+    animal: "Aquatic Otter",
+    spaceClue: "Water temperature regulation failed. Pool temperature rose to 32°C and remained elevated for 5 hours.",
+    vetClue: "Patient is panting, appears overheated, and refusing to enter water. Skin feels hot to touch.",
+    diagnosis: "heatstroke",
+    correctAnswer: "Heat Stroke",
+    sprite: "otter",
+    colors: ["#d2b48c", "#a0826d"]
+  },
+  {
+    animal: "Stripe Skunk",
+    spaceClue: "Air filtration system at 30% capacity. Odor control systems offline. Air quality severely degraded.",
+    vetClue: "Patient is having respiratory difficulties, wheezing, and appears distressed. Eyes are watering.",
+    diagnosis: "respiratory infection",
+    correctAnswer: "Respiratory Infection from Poor Air Quality",
+    sprite: "skunk",
+    colors: ["#696969", "#2f2f2f"]
+  },
+  {
+    animal: "Masked Raccoon",
+    spaceClue: "Food storage security breach. Contaminated food may have been consumed. Emergency medical alert issued.",
+    vetClue: "Patient is vomiting, appears nauseous, and has diarrhea. Abdominal area seems tender.",
+    diagnosis: "food poisoning",
+    correctAnswer: "Food Poisoning",
+    sprite: "raccoon",
+    colors: ["#708090", "#556b2f"]
+  },
+  {
+    animal: "Vulpine Fox",
+    spaceClue: "Exercise equipment malfunctioned. Treadmill and running track unavailable for 7 days.",
+    vetClue: "Patient showing muscle weakness, difficulty running, and appears to have lost muscle tone.",
+    diagnosis: "muscle atrophy",
+    correctAnswer: "Muscle Atrophy from Lack of Exercise",
+    sprite: "fox",
+    colors: ["#ff8c00", "#ff6347"]
+  },
+  {
+    animal: "Digger Badger",
+    spaceClue: "Artificial gravity generator experienced power fluctuations. Gravity varied between 0.5G and 1.5G repeatedly.",
+    vetClue: "Patient appears disoriented, nauseous, and having difficulty maintaining balance. Seems stressed.",
+    diagnosis: "motion sickness",
+    correctAnswer: "Motion Sickness from Gravity Fluctuations",
+    sprite: "badger",
+    colors: ["#2f4f4f", "#1c1c1c"]
+  },
+  {
+    animal: "Quill Porcupine",
+    spaceClue: "Electromagnetic field generators malfunctioned. EM field strength dropped to 20% for 12 hours.",
+    vetClue: "Patient appears disoriented, quills are raised defensively, and patient seems confused about surroundings.",
+    diagnosis: "disorientation",
+    correctAnswer: "Disorientation from EM Field Disruption",
+    sprite: "porcupine",
+    colors: ["#8b7d6b", "#5c4e3d"]
+  },
+  {
+    animal: "Cub Bear",
+    spaceClue: "Hibernation chamber malfunctioned. Temperature and lighting remained at summer levels. Sleep cycle disrupted.",
+    vetClue: "Patient is extremely agitated, showing signs of sleep deprivation, and appears confused. Hyperactive behavior.",
+    diagnosis: "sleep deprivation",
+    correctAnswer: "Sleep Deprivation from Disrupted Hibernation",
+    sprite: "bearcub",
+    colors: ["#cd853f", "#8b4513"]
   }
 ];
 
@@ -237,50 +363,18 @@ const waitingPlayers = [];
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on('findGame', (data) => {
-    // Handle both old format (string) and new format (object)
-    const playerName = typeof data === 'string' ? data : data.name;
-    const preferredRole = typeof data === 'object' ? data.preferredRole : null;
-    
-    console.log(`${playerName} looking for game (preferred role: ${preferredRole || 'any'})`);
+  socket.on('findGame', (playerName) => {
+    console.log(`${playerName} looking for game`);
 
     if (waitingPlayers.length > 0) {
       // Match with waiting player
       const opponent = waitingPlayers.shift();
       const roomId = `room_${socket.id}`;
 
-      // Assign roles based on preferences
-      let roles = {};
-      if (preferredRole && opponent.preferredRole) {
-        // Both players have preferences
-        if (preferredRole !== opponent.preferredRole) {
-          // Different preferences - give each their choice
-          roles[socket.id] = preferredRole;
-          roles[opponent.id] = opponent.preferredRole;
-        } else {
-          // Same preference - randomly assign one to get their preference
-          if (Math.random() > 0.5) {
-            roles[socket.id] = preferredRole;
-            roles[opponent.id] = preferredRole === 'space' ? 'vet' : 'space';
-          } else {
-            roles[opponent.id] = opponent.preferredRole;
-            roles[socket.id] = opponent.preferredRole === 'space' ? 'vet' : 'space';
-          }
-        }
-      } else if (preferredRole) {
-        // Only current player has preference
-        roles[socket.id] = preferredRole;
-        roles[opponent.id] = preferredRole === 'space' ? 'vet' : 'space';
-      } else if (opponent.preferredRole) {
-        // Only opponent has preference
-        roles[opponent.id] = opponent.preferredRole;
-        roles[socket.id] = opponent.preferredRole === 'space' ? 'vet' : 'space';
-      } else {
-        // Neither has preference - random assignment
-        roles = Math.random() > 0.5
-          ? { [socket.id]: 'space', [opponent.id]: 'vet' }
-          : { [socket.id]: 'vet', [opponent.id]: 'space' };
-      }
+      // Randomly assign roles
+      const roles = Math.random() > 0.5
+        ? { [socket.id]: 'space', [opponent.id]: 'vet' }
+        : { [socket.id]: 'vet', [opponent.id]: 'space' };
 
       const gameState = {
         roomId,
@@ -328,12 +422,7 @@ io.on('connection', (socket) => {
 
     } else {
       // Add to waiting list
-      waitingPlayers.push({ 
-        id: socket.id, 
-        name: playerName, 
-        preferredRole: preferredRole,
-        socket 
-      });
+      waitingPlayers.push({ id: socket.id, name: playerName, socket });
       socket.emit('waiting');
     }
   });

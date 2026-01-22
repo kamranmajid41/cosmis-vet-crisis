@@ -111,6 +111,87 @@ const scenarios = [
     correctAnswer: "Motion Sickness from Excess G-Force",
     sprite: "capybara",
     colors: ["#a67c52", "#8b6239"]
+  },
+  {
+    animal: "Orbit Hamster",
+    spaceClue: "Food storage unit malfunctioned. Ration dispenser failed for 18 hours. Emergency rations activated.",
+    vetClue: "Patient is lethargic, weak, and appears underweight. Refusing food but drinking water when offered.",
+    diagnosis: "starvation",
+    correctAnswer: "Starvation/Malnutrition",
+    sprite: "hamster",
+    colors: ["#d4a574", "#b8864a"]
+  },
+  {
+    animal: "Lunar Mouse",
+    spaceClue: "Water reclamation system contaminated. Emergency water supply activated but limited to 50% normal intake.",
+    vetClue: "Patient showing severe dehydration symptoms. Skin tenting, sunken eyes, and extreme lethargy.",
+    diagnosis: "dehydration",
+    correctAnswer: "Severe Dehydration",
+    sprite: "mouse",
+    colors: ["#c0c0c0", "#808080"]
+  },
+  {
+    animal: "Nebula Cat",
+    spaceClue: "Atmospheric pressure dropped to 0.7 atm during emergency depressurization drill. Normal pressure restored after 30 minutes.",
+    vetClue: "Patient is disoriented, breathing rapidly, and showing signs of confusion. Ears appear to be in distress.",
+    diagnosis: "barotrauma",
+    correctAnswer: "Barotrauma (Pressure Injury)",
+    sprite: "cat",
+    colors: ["#ffa500", "#ff8c00"]
+  },
+  {
+    animal: "Stellar Dog",
+    spaceClue: "Exercise equipment malfunctioned. Treadmill and resistance training unavailable for 5 days.",
+    vetClue: "Patient showing muscle weakness, difficulty standing, and appears to have lost muscle mass.",
+    diagnosis: "muscle atrophy",
+    correctAnswer: "Muscle Atrophy from Lack of Exercise",
+    sprite: "dog",
+    colors: ["#8b4513", "#654321"]
+  },
+  {
+    animal: "Asteroid Rat",
+    spaceClue: "Waste management system backup. Odor control systems at 40% efficiency. Air quality degraded.",
+    vetClue: "Patient showing respiratory distress, wheezing, and appears to be having difficulty breathing normally.",
+    diagnosis: "respiratory infection",
+    correctAnswer: "Respiratory Infection from Poor Air Quality",
+    sprite: "rat",
+    colors: ["#696969", "#2f2f2f"]
+  },
+  {
+    animal: "Cosmic Bird",
+    spaceClue: "Artificial gravity generator experienced intermittent failures. Gravity fluctuated between 0.3G and 1.2G for 4 hours.",
+    vetClue: "Patient appears stressed, disoriented, and having difficulty perching. Feathers are ruffled and patient seems anxious.",
+    diagnosis: "stress",
+    correctAnswer: "Stress from Gravity Fluctuations",
+    sprite: "bird",
+    colors: ["#ffd700", "#daa520"]
+  },
+  {
+    animal: "Solar Guinea Pig",
+    spaceClue: "UV light system in habitat failed completely. Vitamin D synthesis lamps offline for 3 days.",
+    vetClue: "Patient showing signs of weakness, poor appetite, and appears to have metabolic issues. Bones seem fragile.",
+    diagnosis: "vitamin d deficiency",
+    correctAnswer: "Vitamin D Deficiency",
+    sprite: "guineapig",
+    colors: ["#deb887", "#cd853f"]
+  },
+  {
+    animal: "Galaxy Sugar Glider",
+    spaceClue: "Sleep cycle lighting malfunctioned. Day/night cycle disrupted. Lights remained on for 48 hours straight.",
+    vetClue: "Patient is extremely agitated, showing signs of sleep deprivation, and appears disoriented. Hyperactive behavior.",
+    diagnosis: "sleep deprivation",
+    correctAnswer: "Sleep Deprivation from Circadian Disruption",
+    sprite: "sugarGlider",
+    colors: ["#e6e6fa", "#9370db"]
+  },
+  {
+    animal: "Aqua Axolotl",
+    spaceClue: "Water filtration system failed. Water quality degraded. pH levels dropped to 5.2. Emergency filtration activated after 6 hours.",
+    vetClue: "Patient's gills appear irritated and inflamed. Skin shows signs of chemical burns. Patient is lethargic and not eating.",
+    diagnosis: "water quality",
+    correctAnswer: "Water Quality Issues (pH Imbalance)",
+    sprite: "axolotl",
+    colors: ["#ff69b4", "#ff1493"]
   }
 ];
 
@@ -312,7 +393,7 @@ function startRoundTimer(roomId) {
   const game = games.get(roomId);
   if (!game) return;
 
-  game.timer = 60;
+  game.timer = 180;
   game.timerInterval = setInterval(() => {
     game.timer -= 1;
     io.to(roomId).emit('timerUpdate', game.timer);

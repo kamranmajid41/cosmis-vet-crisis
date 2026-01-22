@@ -72,7 +72,7 @@ socket.on('gameStart', (data) => {
   currentRoomId = data.roomId;
   myRole = data.role;
 
-  roleBadge.textContent = myRole === 'space' ? '🚀 Space Tech' : '🐾 Vet Assistant';
+  roleBadge.textContent = myRole === 'space' ? 'Space Tech' : 'Vet Assistant';
   opponentName.textContent = `vs ${data.opponent}`;
 
   updateGameState(data.gameState);
@@ -130,15 +130,15 @@ function showScreen(screen) {
 function updateGameState(state) {
   roundDisplay.textContent = `${state.currentRound}/${state.maxRounds}`;
   scoreDisplay.textContent = state.score;
-  livesDisplay.textContent = '❤️'.repeat(state.lives) + '🖤'.repeat(3 - state.lives);
+  livesDisplay.textContent = `${state.lives}/3`;
   timerDisplay.textContent = state.timer;
 
   animalName.textContent = state.animal;
 
   if (state.role === 'space') {
-    clueTitle.textContent = '🚀 Space Tech Readings:';
+    clueTitle.textContent = 'Space Tech Readings:';
   } else {
-    clueTitle.textContent = '🐾 Veterinary Observations:';
+    clueTitle.textContent = 'Veterinary Observations:';
   }
 
   clueText.textContent = state.clue;
@@ -169,22 +169,22 @@ function submitDiagnosis() {
 function showResult(result) {
   if (result.correct) {
     resultContent.innerHTML = `
-      <div class="result-correct">✅ Correct!</div>
+      <div class="result-correct">Correct!</div>
       <div class="result-details">
         <p><strong>Diagnosis:</strong> ${result.correctAnswer}</p>
         <p><strong>Your Answer:</strong> ${result.playerAnswer}</p>
         <p><strong>Score:</strong> ${result.score}</p>
-        <p><strong>Lives:</strong> ${'❤️'.repeat(result.lives)}${'🖤'.repeat(3 - result.lives)}</p>
+        <p><strong>Lives:</strong> ${result.lives}/3</p>
       </div>
     `;
   } else {
     resultContent.innerHTML = `
-      <div class="result-incorrect">❌ Incorrect!</div>
+      <div class="result-incorrect">Incorrect!</div>
       <div class="result-details">
         <p><strong>Correct Answer:</strong> ${result.correctAnswer}</p>
         <p><strong>Your Answer:</strong> ${result.playerAnswer}</p>
         <p><strong>Score:</strong> ${result.score}</p>
-        <p><strong>Lives:</strong> ${'❤️'.repeat(result.lives)}${'🖤'.repeat(3 - result.lives)}</p>
+        <p><strong>Lives:</strong> ${result.lives}/3</p>
       </div>
     `;
   }
@@ -195,9 +195,9 @@ function showResult(result) {
 
 function showGameOver(data) {
   if (data.reason === 'completed') {
-    gameOverTitle.textContent = '🎉 Mission Complete!';
+    gameOverTitle.textContent = 'Mission Complete!';
   } else {
-    gameOverTitle.textContent = '💔 Mission Failed';
+    gameOverTitle.textContent = 'Mission Failed';
   }
 
   finalScore.textContent = data.finalScore;

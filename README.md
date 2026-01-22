@@ -1,14 +1,14 @@
-# 🚀 Cosmic Vet Crisis 🐾
+# Cosmic Vet Crisis
 
 A real-time multiplayer retro game where you and your partner work together to diagnose exotic space animals!
 
 ## Features
 
-- ✨ **AI-Powered Diagnosis** - Smart answer validation using Claude AI accepts synonyms and natural language
-- 🎮 **Retro Pixel Art** - Authentic CRT screen effects with scanlines and flicker
-- 🐾 **Animated Sprites** - Custom pixel art for each space animal
-- 💫 **Neon Aesthetics** - Classic 80s arcade vibes with glowing UI elements
-- 🎯 **Real-time Multiplayer** - WebSocket-powered cooperative gameplay
+- **AI-Powered Diagnosis** - Smart answer validation using Claude AI accepts synonyms and natural language
+- **Retro Pixel Art** - Authentic CRT screen effects with scanlines and flicker
+- **Animated Sprites** - Custom pixel art for each space animal
+- **Neon Aesthetics** - Classic 80s arcade vibes with glowing UI elements
+- **Real-time Multiplayer** - WebSocket-powered cooperative gameplay
 
 ## Setup
 

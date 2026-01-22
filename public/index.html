@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cosmic Vet Crisis</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Start Screen -->
+  <div id="startScreen" class="screen active">
+    <div class="container">
+      <h1 class="title">🚀 Cosmic Vet Crisis 🐾</h1>
+      <p class="subtitle">Save exotic space animals by combining your expertise!</p>
+      <div class="input-group">
+        <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+        <button id="findGameBtn" class="btn-primary">Find Game</button>
+      </div>
+      <div class="rules">
+        <h3>How to Play:</h3>
+        <ul>
+          <li>You'll be assigned either Space Tech or Vet role</li>
+          <li>Each round, an exotic animal needs diagnosis</li>
+          <li>You get different clues based on your role</li>
+          <li>Chat with your partner to solve it together</li>
+          <li>Submit diagnosis within 60 seconds</li>
+          <li>Survive 10 rounds or lose 3 lives - you lose!</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Waiting Screen -->
+  <div id="waitingScreen" class="screen">
+    <div class="container">
+      <h2>Searching for opponent...</h2>
+      <div class="spinner"></div>
+    </div>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="gameScreen" class="screen">
+    <div class="game-container">
+      <!-- Header -->
+      <div class="game-header">
+        <div class="stats">
+          <span class="stat">Round: <strong id="roundDisplay">1/10</strong></span>
+          <span class="stat">Score: <strong id="scoreDisplay">0</strong></span>
+          <span class="stat">Lives: <strong id="livesDisplay">❤️❤️❤️</strong></span>
+        </div>
+        <div class="timer">
+          <div class="timer-circle">
+            <span id="timerDisplay">60</span>
+          </div>
+        </div>
+        <div class="role-info">
+          <span class="role-badge" id="roleBadge">Your Role</span>
+          <span class="opponent" id="opponentName">vs Opponent</span>
+        </div>
+      </div>
+
+      <!-- Main Game Area -->
+      <div class="game-content">
+        <!-- Patient Info -->
+        <div class="patient-card">
+          <h2>Patient: <span id="animalName">Space Gecko</span></h2>
+          <div class="animal-sprite">
+            <canvas id="animalCanvas"></canvas>
+          </div>
+          <div class="clue-box">
+            <h3 id="clueTitle">Your Clue:</h3>
+            <p id="clueText">Analyzing patient...</p>
+          </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-section">
+          <div class="chat-messages" id="chatMessages"></div>
+          <div class="chat-input-group">
+            <input type="text" id="chatInput" placeholder="Discuss with your partner...">
+            <button id="sendChatBtn" class="btn-secondary">Send</button>
+          </div>
+        </div>
+
+        <!-- Diagnosis Submission -->
+        <div class="diagnosis-section">
+          <h3>Submit Diagnosis:</h3>
+          <input type="text" id="diagnosisInput" placeholder="What's wrong with this patient?">
+          <button id="submitDiagnosisBtn" class="btn-primary">Submit Diagnosis</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Result Screen -->
+  <div id="resultScreen" class="screen">
+    <div class="container result-container">
+      <div id="resultContent"></div>
+      <p class="next-round-text">Next round starting soon...</p>
+    </div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameOverScreen" class="screen">
+    <div class="container">
+      <h1 id="gameOverTitle">Mission Complete!</h1>
+      <div class="game-over-stats">
+        <p class="final-score">Final Score: <strong id="finalScore">0</strong></p>
+        <p class="rounds-completed">Rounds Completed: <strong id="roundsCompleted">0</strong></p>
+      </div>
+      <button id="playAgainBtn" class="btn-primary">Play Again</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="sprites.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

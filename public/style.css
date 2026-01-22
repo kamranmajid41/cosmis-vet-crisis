@@ -1,0 +1,742 @@
+/* Import retro pixel font */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+:root {
+  --neon-cyan: #00ffff;
+  --neon-pink: #ff00ff;
+  --neon-green: #00ff00;
+  --neon-yellow: #ffff00;
+  --retro-bg: #0a0a0a;
+  --retro-panel: #1a1a2e;
+  --retro-text: #00ff41;
+  --pixel-size: 4px;
+}
+
+body {
+  font-family: 'VT323', monospace;
+  background: var(--retro-bg);
+  color: var(--retro-text);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* CRT Screen Effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15),
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanlines 8s linear infinite;
+}
+
+/* CRT Flicker */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 9998;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
+
+@keyframes flicker {
+  0% { opacity: 0.27861; }
+  5% { opacity: 0.34769; }
+  10% { opacity: 0.23604; }
+  15% { opacity: 0.90626; }
+  20% { opacity: 0.18128; }
+  25% { opacity: 0.83891; }
+  30% { opacity: 0.65583; }
+  35% { opacity: 0.67807; }
+  40% { opacity: 0.26559; }
+  45% { opacity: 0.84693; }
+  50% { opacity: 0.96019; }
+  55% { opacity: 0.08594; }
+  60% { opacity: 0.20313; }
+  65% { opacity: 0.71988; }
+  70% { opacity: 0.53455; }
+  75% { opacity: 0.37288; }
+  80% { opacity: 0.71428; }
+  85% { opacity: 0.70419; }
+  90% { opacity: 0.7003; }
+  95% { opacity: 0.36108; }
+  100% { opacity: 0.24387; }
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.screen.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: screenBoot 0.5s ease-out;
+}
+
+@keyframes screenBoot {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.container {
+  background: var(--retro-panel);
+  border: 4px solid var(--neon-cyan);
+  border-radius: 0;
+  padding: 40px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow:
+    0 0 20px var(--neon-cyan),
+    inset 0 0 20px rgba(0, 255, 255, 0.1);
+  position: relative;
+}
+
+/* Pixel corners */
+.container::before,
+.container::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 4px solid var(--neon-pink);
+}
+
+.container::before {
+  top: -2px;
+  left: -2px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.container::after {
+  bottom: -2px;
+  right: -2px;
+  border-left: none;
+  border-top: none;
+}
+
+.title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--neon-cyan);
+  text-shadow:
+    0 0 10px var(--neon-cyan),
+    0 0 20px var(--neon-cyan),
+    0 0 30px var(--neon-cyan);
+  animation: glow 2s ease-in-out infinite alternate;
+  line-height: 1.4;
+}
+
+@keyframes glow {
+  from {
+    text-shadow:
+      0 0 10px var(--neon-cyan),
+      0 0 20px var(--neon-cyan),
+      0 0 30px var(--neon-cyan);
+  }
+  to {
+    text-shadow:
+      0 0 20px var(--neon-cyan),
+      0 0 30px var(--neon-cyan),
+      0 0 40px var(--neon-cyan),
+      0 0 50px var(--neon-pink);
+  }
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: var(--neon-pink);
+}
+
+.input-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;
+  border: 3px solid var(--neon-green);
+  background: var(--retro-bg);
+  font-size: 1.3rem;
+  font-family: 'VT323', monospace;
+  color: var(--neon-green);
+  box-shadow:
+    inset 0 0 10px rgba(0, 255, 65, 0.2),
+    0 0 5px var(--neon-green);
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow:
+    inset 0 0 10px rgba(0, 255, 65, 0.4),
+    0 0 15px var(--neon-green);
+  animation: inputGlow 0.3s ease;
+}
+
+@keyframes inputGlow {
+  0%, 100% { border-color: var(--neon-green); }
+  50% { border-color: var(--neon-yellow); }
+}
+
+.btn-primary {
+  padding: 12px 24px;
+  background: var(--retro-bg);
+  border: 3px solid var(--neon-pink);
+  color: var(--neon-pink);
+  font-size: 1.3rem;
+  font-family: 'Press Start 2P', cursive;
+  font-weight: normal;
+  cursor: pointer;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.1s;
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.btn-primary:hover {
+  background: var(--neon-pink);
+  color: var(--retro-bg);
+  box-shadow:
+    0 0 20px var(--neon-pink),
+    0 0 30px var(--neon-pink);
+  transform: translate(-2px, -2px);
+}
+
+.btn-primary:active {
+  transform: translate(0, 0);
+}
+
+.btn-secondary {
+  padding: 10px 16px;
+  background: var(--retro-bg);
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  font-size: 1.2rem;
+  font-family: 'VT323', monospace;
+  cursor: pointer;
+  box-shadow: 0 0 5px var(--neon-cyan);
+}
+
+.btn-secondary:hover {
+  background: var(--neon-cyan);
+  color: var(--retro-bg);
+}
+
+.rules {
+  background: var(--retro-bg);
+  border: 2px solid var(--neon-green);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.rules h3 {
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+}
+
+.rules ul {
+  list-style: none;
+  line-height: 1.8;
+  font-size: 1.3rem;
+}
+
+.rules li::before {
+  content: "► ";
+  color: var(--neon-pink);
+  margin-right: 8px;
+}
+
+/* Waiting Screen */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid var(--retro-bg);
+  border-top-color: var(--neon-cyan);
+  border-right-color: var(--neon-pink);
+  border-bottom-color: var(--neon-yellow);
+  border-left-color: var(--neon-green);
+  animation: spin 1s linear infinite;
+  margin: 30px auto;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Game Screen */
+.game-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.game-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  background: var(--retro-panel);
+  border: 3px solid var(--neon-cyan);
+  padding: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  box-shadow: 0 0 15px var(--neon-cyan);
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.stat {
+  font-size: 1.4rem;
+  color: var(--neon-green);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+}
+
+.stat strong {
+  color: var(--neon-yellow);
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+}
+
+.timer-circle {
+  width: 100px;
+  height: 100px;
+  background: var(--retro-bg);
+  border: 4px solid var(--neon-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Press Start 2P', cursive;
+  color: var(--neon-green);
+  box-shadow:
+    0 0 20px var(--neon-green),
+    inset 0 0 20px rgba(0, 255, 0, 0.1);
+  position: relative;
+}
+
+.timer-circle::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border: 2px solid var(--neon-pink);
+  opacity: 0.5;
+}
+
+.timer-circle.warning {
+  border-color: #ff0000;
+  color: #ff0000;
+  animation: alarmBlink 0.5s infinite;
+}
+
+@keyframes alarmBlink {
+  0%, 100% {
+    box-shadow:
+      0 0 20px #ff0000,
+      inset 0 0 20px rgba(255, 0, 0, 0.2);
+    border-color: #ff0000;
+  }
+  50% {
+    box-shadow:
+      0 0 40px #ff0000,
+      inset 0 0 40px rgba(255, 0, 0, 0.4);
+    border-color: #ff00ff;
+  }
+}
+
+.role-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.role-badge {
+  padding: 10px 16px;
+  background: var(--retro-bg);
+  border: 3px solid var(--neon-pink);
+  color: var(--neon-pink);
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: 'Press Start 2P', cursive;
+  box-shadow: 0 0 10px var(--neon-pink);
+}
+
+.opponent {
+  font-size: 1.2rem;
+  color: var(--neon-cyan);
+}
+
+.game-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.patient-card {
+  background: var(--retro-panel);
+  border: 3px solid var(--neon-yellow);
+  padding: 30px;
+  grid-column: 1 / -1;
+  box-shadow: 0 0 20px var(--neon-yellow);
+  position: relative;
+}
+
+.patient-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.5;
+}
+
+/* Animal Sprite Container */
+.animal-sprite {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  position: relative;
+  image-rendering: pixelated;
+}
+
+.clue-box {
+  background: var(--retro-bg);
+  border: 2px solid var(--neon-cyan);
+  padding: 20px;
+  border-left: 6px solid var(--neon-cyan);
+  position: relative;
+}
+
+.clue-box::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 10px;
+  height: 10px;
+  background: var(--neon-green);
+  box-shadow: 0 0 10px var(--neon-green);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.clue-box h3 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: var(--neon-cyan);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+}
+
+.clue-box p {
+  line-height: 1.8;
+  font-size: 1.4rem;
+  color: var(--retro-text);
+}
+
+.chat-section {
+  background: var(--retro-panel);
+  border: 3px solid var(--neon-green);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  box-shadow: 0 0 15px var(--neon-green);
+}
+
+.chat-section::before {
+  content: "[COMMS LINK]";
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: var(--neon-green);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar */
+.chat-messages::-webkit-scrollbar {
+  width: 12px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--retro-bg);
+  border: 2px solid var(--neon-green);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: var(--neon-green);
+  border: 2px solid var(--retro-bg);
+}
+
+.chat-message {
+  background: var(--retro-bg);
+  border-left: 4px solid var(--neon-pink);
+  padding: 10px 15px;
+  animation: messageSlide 0.3s ease;
+  font-size: 1.3rem;
+}
+
+@keyframes messageSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.chat-message strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 1.1rem;
+  color: var(--neon-pink);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+}
+
+.chat-input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-input-group input {
+  flex: 1;
+  font-size: 1.3rem;
+}
+
+.diagnosis-section {
+  background: var(--retro-panel);
+  border: 3px solid var(--neon-pink);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 500px;
+  justify-content: center;
+  box-shadow: 0 0 20px var(--neon-pink);
+}
+
+.diagnosis-section::before {
+  content: "[DIAGNOSIS TERMINAL]";
+  display: block;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  color: var(--neon-pink);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.diagnosis-section h3 {
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--neon-yellow);
+  font-family: 'Press Start 2P', cursive;
+  line-height: 1.5;
+}
+
+.diagnosis-section input {
+  padding: 15px;
+  font-size: 1.4rem;
+  border-color: var(--neon-pink);
+  color: var(--neon-pink);
+}
+
+.diagnosis-section button {
+  padding: 15px;
+  font-size: 1rem;
+}
+
+/* Result Screen */
+.result-container {
+  text-align: center;
+}
+
+.result-correct {
+  color: var(--neon-green);
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', cursive;
+  animation: resultPulse 0.5s ease;
+  text-shadow: 0 0 20px var(--neon-green);
+}
+
+.result-incorrect {
+  color: #ff0000;
+  font-size: 3rem;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', cursive;
+  animation: resultShake 0.5s ease;
+  text-shadow: 0 0 20px #ff0000;
+}
+
+@keyframes resultPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes resultShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.result-details {
+  background: var(--retro-bg);
+  border: 3px solid var(--neon-cyan);
+  padding: 20px;
+  margin: 20px 0;
+  font-size: 1.3rem;
+  line-height: 2;
+}
+
+.result-details strong {
+  color: var(--neon-yellow);
+}
+
+.next-round-text {
+  margin-top: 30px;
+  font-size: 1.3rem;
+  color: var(--neon-cyan);
+  animation: textBlink 1.5s infinite;
+}
+
+@keyframes textBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Game Over Screen */
+.game-over-stats {
+  margin: 30px 0;
+  font-size: 1.5rem;
+  line-height: 2.5;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1rem;
+}
+
+.final-score, .rounds-completed {
+  margin: 15px 0;
+  color: var(--neon-cyan);
+}
+
+.final-score strong,
+.rounds-completed strong {
+  color: var(--neon-yellow);
+  font-size: 1.5rem;
+}
+
+#gameOverTitle {
+  font-size: 2.5rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .game-content {
+    grid-template-columns: 1fr;
+  }
+
+  .game-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .role-info {
+    align-items: center;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .chat-section, .diagnosis-section {
+    height: 350px;
+  }
+
+  .stat {
+    font-size: 0.8rem;
+  }
+
+  .btn-primary {
+    font-size: 0.9rem;
+    padding: 10px 16px;
+  }
+}

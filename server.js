@@ -263,11 +263,13 @@ io.on('connection', (socket) => {
         phase: 'playing', // playing, diagnosis, result
         timer: 180,
         currentScenario: null,
-        messages: []
+        messages: [],
+        usedScenarios: [] // Track which scenario indices have been used
       };
 
       // Start first round - always use first scenario
       gameState.currentScenario = scenarios[0];
+      gameState.usedScenarios.push(0);
 
       socket.join(roomId);
       opponent.socket.join(roomId);
@@ -436,7 +438,21 @@ function nextRound(roomId) {
   game.currentRound += 1;
   game.phase = 'playing';
   game.messages = [];
-  game.currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+  
+  // Select a scenario that hasn't been used yet
+  const availableScenarios = scenarios
+    .map((scenario, index) => ({ scenario, index }))
+    .filter(({ index }) => !game.usedScenarios.includes(index));
+  
+  // If all scenarios have been used, reset (shouldn't happen with 10 rounds and 20+ scenarios)
+  if (availableScenarios.length === 0) {
+    game.usedScenarios = [];
+    availableScenarios.push(...scenarios.map((scenario, index) => ({ scenario, index })));
+  }
+  
+  const selected = availableScenarios[Math.floor(Math.random() * availableScenarios.length)];
+  game.currentScenario = selected.scenario;
+  game.usedScenarios.push(selected.index);
 
   // Notify players of new round
   Object.keys(game.players).forEach(playerId => {

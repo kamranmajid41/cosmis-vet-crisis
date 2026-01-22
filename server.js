@@ -237,18 +237,50 @@ const waitingPlayers = [];
 io.on('connection', (socket) => {
   console.log('Player connected:', socket.id);
 
-  socket.on('findGame', (playerName) => {
-    console.log(`${playerName} looking for game`);
+  socket.on('findGame', (data) => {
+    // Handle both old format (string) and new format (object)
+    const playerName = typeof data === 'string' ? data : data.name;
+    const preferredRole = typeof data === 'object' ? data.preferredRole : null;
+    
+    console.log(`${playerName} looking for game (preferred role: ${preferredRole || 'any'})`);
 
     if (waitingPlayers.length > 0) {
       // Match with waiting player
       const opponent = waitingPlayers.shift();
       const roomId = `room_${socket.id}`;
 
-      // Randomly assign roles
-      const roles = Math.random() > 0.5
-        ? { [socket.id]: 'space', [opponent.id]: 'vet' }
-        : { [socket.id]: 'vet', [opponent.id]: 'space' };
+      // Assign roles based on preferences
+      let roles = {};
+      if (preferredRole && opponent.preferredRole) {
+        // Both players have preferences
+        if (preferredRole !== opponent.preferredRole) {
+          // Different preferences - give each their choice
+          roles[socket.id] = preferredRole;
+          roles[opponent.id] = opponent.preferredRole;
+        } else {
+          // Same preference - randomly assign one to get their preference
+          if (Math.random() > 0.5) {
+            roles[socket.id] = preferredRole;
+            roles[opponent.id] = preferredRole === 'space' ? 'vet' : 'space';
+          } else {
+            roles[opponent.id] = opponent.preferredRole;
+            roles[socket.id] = opponent.preferredRole === 'space' ? 'vet' : 'space';
+          }
+        }
+      } else if (preferredRole) {
+        // Only current player has preference
+        roles[socket.id] = preferredRole;
+        roles[opponent.id] = preferredRole === 'space' ? 'vet' : 'space';
+      } else if (opponent.preferredRole) {
+        // Only opponent has preference
+        roles[opponent.id] = opponent.preferredRole;
+        roles[socket.id] = opponent.preferredRole === 'space' ? 'vet' : 'space';
+      } else {
+        // Neither has preference - random assignment
+        roles = Math.random() > 0.5
+          ? { [socket.id]: 'space', [opponent.id]: 'vet' }
+          : { [socket.id]: 'vet', [opponent.id]: 'space' };
+      }
 
       const gameState = {
         roomId,
@@ -296,7 +328,12 @@ io.on('connection', (socket) => {
 
     } else {
       // Add to waiting list
-      waitingPlayers.push({ id: socket.id, name: playerName, socket });
+      waitingPlayers.push({ 
+        id: socket.id, 
+        name: playerName, 
+        preferredRole: preferredRole,
+        socket 
+      });
       socket.emit('waiting');
     }
   });

@@ -43,8 +43,9 @@ let myRole = null;
 // Event listeners
 findGameBtn.addEventListener('click', () => {
   const name = playerNameInput.value.trim();
-  if (name) {
-    socket.emit('findGame', name);
+  const roleInput = document.querySelector('input[name="role"]:checked');
+  if (name && roleInput) {
+    socket.emit('findGame', { name, preferredRole: roleInput.value });
     showScreen(waitingScreen);
   }
 });

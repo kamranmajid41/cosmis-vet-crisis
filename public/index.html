@@ -13,12 +13,33 @@
       <h1 class="title">Cosmic Vet Crisis</h1>
       <div class="input-group">
         <input type="text" id="playerName" placeholder="Enter your name" maxlength="20">
+      </div>
+      <div class="role-selection">
+        <h3>Choose Your Role:</h3>
+        <div class="role-options">
+          <label class="role-option">
+            <input type="radio" name="role" value="space" checked>
+            <div class="role-card">
+              <strong>Space Tech</strong>
+              <p>Monitor environmental systems and space station readings</p>
+            </div>
+          </label>
+          <label class="role-option">
+            <input type="radio" name="role" value="vet">
+            <div class="role-card">
+              <strong>Vet Assistant</strong>
+              <p>Examine the patient and provide medical observations</p>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="input-group">
         <button id="findGameBtn" class="btn-primary">Find Game</button>
       </div>
       <div class="rules">
         <h3>How to Play:</h3>
         <ul>
-          <li>You'll be assigned either Space Tech or Vet role</li>
+          <li>Choose your role: Space Tech or Vet Assistant</li>
           <li>Each round, an exotic animal needs diagnosis</li>
           <li>You get different clues based on your role</li>
           <li>Chat with your partner to solve it together</li>

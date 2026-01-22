@@ -189,7 +189,7 @@ io.on('connection', (socket) => {
         score: 0,
         lives: 3,
         phase: 'playing', // playing, diagnosis, result
-        timer: 60,
+        timer: 180,
         currentScenario: null,
         messages: []
       };

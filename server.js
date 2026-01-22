@@ -14,15 +14,6 @@ const anthropic = new Anthropic({
 // Game scenarios with pixel art sprites
 const scenarios = [
   {
-    animal: "Leachianus Gecko",
-    spaceClue: "Habitat humidity control malfunctioned. Environmental sensors show 12% humidity for the past 8 hours. Temperature stable at 24°C.",
-    vetClue: "Patient showing signs of severe dehydration. Skin appears wrinkled and lacks elasticity. Eyes are sunken. Patient is lethargic and unresponsive to stimuli.",
-    diagnosis: "dehydration",
-    correctAnswer: "Severe Dehydration",
-    sprite: "leachianus",
-    colors: ["#8b7355", "#6b5644"]
-  },
-  {
     animal: "Space Gecko",
     spaceClue: "Life support shows oxygen levels dropped 15% in the past hour. Gravity stabilizers experienced brief fluctuations.",
     vetClue: "Patient is lethargic, breathing rapidly, and tongue appears pale. Normally very active species.",
@@ -275,7 +266,7 @@ io.on('connection', (socket) => {
         messages: []
       };
 
-      // Start first round - always use first scenario (Leachianus Gecko)
+      // Start first round - always use first scenario
       gameState.currentScenario = scenarios[0];
 
       socket.join(roomId);
